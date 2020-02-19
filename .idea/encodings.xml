@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/fruitmall-biz" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/fruitmall-biz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/fruitmall-dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/fruitmall-dao/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/fruitmall-entity" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/fruitmall-entity/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/fruitmall-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/fruitmall-web/src/main/java" charset="UTF-8" />
+  </component>
+</project>

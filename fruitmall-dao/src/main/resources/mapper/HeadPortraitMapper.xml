@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzy.fruitmall.mapper.HeadPortraitMapper">
+    <select id="getHeadPortraitById" resultType="headPortraitInfo">
+          select * from head_portrait_info where head_portrait_id=#{headPortraitId}
+    </select>
+
+    <select id="findAllHeadPortrait" resultType="HeadPortraitInfo">
+        select * from head_Portrait_info
+    </select>
+
+
+</mapper>

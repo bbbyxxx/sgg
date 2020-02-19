@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzy.fruitmall.mapper.OrderMapper">
+    <select id="findAllOrder" resultType="OrderInfo">
+        select * from Order_info
+    </select>
+
+    <resultMap id="orderMap" type="orderInfo">
+        <id column="order_id" property="orderId"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="merchant_id" property="merchantId"/>
+        <result column="order_amount" property="orderAmount"/>
+        <result column="order_time" property="orderTime"/>
+        <result column="address_id" property="addressId"/>
+        <result column="order_state" property="orderState"/>
+        <result column="payment_method" property="paymentMethod"/>
+        <!--出问题的就是下面这句，引起了循环引用，导致多列为null-->
+        <association property="addressInfo" column="address_id" select="com.xzy.fruitmall.mapper.AddressMapper.getAddressByAddressId"/>
+        <collection property="goodsOrderSet" column="order_id" select="com.xzy.fruitmall.mapper.GoodsOrderMapper.getGoodsOrderSetByOrderId"/>
+    </resultMap>
+    <select id="getOrderSetByCustomerId" resultMap="orderMap">
+        select * from order_info where customer_id=#{customerId}
+    </select>
+
+    <select id="getOrderSet" resultMap="orderMap">
+        select * from order_info where customer_id=#{customerId} and order_state=#{orderState}
+    </select>
+
+    <select id="getAllOrderSet" resultMap="orderMap">
+        select * from order_info where customer_id=#{customerId}
+    </select>
+
+
+
+    <!--<update id="pay" >-->
+        <!--update order_info  set order_state=1 where order_id=#{orderId}-->
+    <!--</update>-->
+
+    <update id="cancelPay">
+        update order_info  set order_state=4,order_description='交易关闭' where order_id=#{orderId}
+    </update>
+    <update id="confirmReceipt">
+        update order_info  set order_state=3 where order_id=#{orderId}
+    </update>
+    <select id="getOrderByOrderId" resultType="OrderInfo">
+        select * from order_info where order_id=#{orderId};
+    </select>
+    <update id="updateOrder" parameterType="OrderInfo">
+        UPDATE order_info SET order_State=2 WHERE order_id=#{orderId}
+    </update>
+</mapper>

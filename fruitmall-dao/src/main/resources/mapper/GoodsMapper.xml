@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzy.fruitmall.mapper.GoodsMapper">
+    <resultMap id="goodsMap" type="goodsInfo">
+        <id column="goods_id" property="goodsId"/>
+        <collection property="imgSet" column="goods_id" select="com.xzy.fruitmall.mapper.ImgMapper.getImgByGoodsId"/>
+        <collection property="evaluateSet" column="goods_id" select="com.xzy.fruitmall.mapper.EvaluateMapper.getEvaluateSetByGoodsId"/>
+    </resultMap>
+    <select id="getGoodsByGoodsId" resultMap="goodsMap">
+        select * from goods_info where goods_id=#{goodsId}
+    </select>
+
+    <!--有时候需要的信息没有那么复杂，上面的信息是最完全的，这个是比较粗略的，有时候查goodsInfo用这个就够了-->
+    <select id="getSketchyGoodsByGoodsId" resultType="goodsInfo">
+        select * from goods_info where goods_id=#{goodsId}
+    </select>
+    <select id="searchClassify" resultType="goodsInfo">
+        select distinct goods_sort from goods_info
+    </select>
+    <select id="searchClassifyGoods" parameterType="goodsInfo" resultType="goodsInfo">
+        select *from goods_info where goods_sort=#{goodsSort}
+    </select>
+    <select id="getAdve" resultType="adverInfo">
+        select *from adver_info
+    </select>
+    <select id="getRotation" resultType="rotationInfo">
+        select *from rotation_info
+    </select>
+    <select id="getNewGoods" resultType="goodsInfo">
+    SELECT * FROM goods_info ORDER BY goods_time DESC LIMIT 9;
+    </select>
+    <select id="getHotSellGoods" resultType="goodsInfo">
+     SELECT * FROM goods_info ORDER BY goods_sale DESC LIMIT 9;
+    </select>
+
+
+
+
+
+    <!--胡-->
+    <resultMap id="myGoodsMapper" type="GoodsInfo">
+        <id column="goods_id" property="goodsId" />
+        <!--        <result column="goods_id" property="goodsId" />-->
+        <collection property="imgSet" column="goods_id"
+                    select="com.xzy.fruitmall.mapper.GoodsMapper.getImgById" />
+        <collection property="evaluateSet" column="goods_id"
+                    select="com.xzy.fruitmall.mapper.GoodsMapper.getEvaluateById" />
+    </resultMap>
+    <select id="findAllGoods" resultMap="myGoodsMapper">
+        SELECT * FROM goods_info
+    </select>
+    <select id="getImgById" resultType="imgInfo">
+        select * from img_info where goods_id=#{goodsId}
+    </select>
+    <select id="getEvaluateById" resultType="evaluateInfo">
+        select * from evaluate_info where goods_id=#{goodsId}
+    </select>
+
+
+    <select id="findGoodsByName" resultType="goodsInfo">
+        SELECT * FROM goods_info WHERE goods_name like concat('%',#{goodsName},'%')
+    </select>
+    <delete id="deleteGoodsById" parameterType="int">
+        DELETE FROM goods_info WHERE goods_id = #{goodsId}
+    </delete>
+    <select id="findGoodsById" resultMap="myGoodsMapper">
+        SELECT * FROM goods_info WHERE goods_id = #{goodsId}
+    </select>
+    <update id="updateGoods" parameterType="int">
+        update goods_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="goodsName!=null">
+                goods_Name=#{goodsName},
+            </if>
+            <if test="goodsPrice!=null">
+                goods_Price=#{goodsPrice},
+            </if>
+            <if test="goodsSort!=null">
+                goods_Sort=#{goodsSort},
+            </if>
+            <if test="goodsDescriotion!=null">
+                goods_description=#{goodsDescription},
+            </if>
+            <if test="goodsStock!=null">
+                goods_stock=#{goodsStock},
+            </if>
+            <if test="goodsThreshold!=null">
+                goods_threshold=#{goodsThreshold},
+            </if>
+            <if test="goodsOrigin!=null">
+                goods_origin=#{goodsOrigin},
+            </if>
+            <if test="storageConditions!=null">
+                storage_conditions=#{storageConditions},
+            </if>
+            <if test="goodsBrand!=null">
+                goods_brand=#{goodsBrand},
+            </if>
+            <if test="picPath!=null">
+                pic_path=#{picPath},
+            </if>
+        </trim>
+        where goods_id=#{goodsId}
+    </update>
+    <insert id="addGoods" parameterType="int">
+        INSERT INTO goods_info VALUES(DEFAULT,#{goodsName},#{goodsPrice},#{goodsSort},#{goodsDescription},#{goodsStock},#{goodsThreshold},#{goodsOrigin},#{storageConditions},#{goodsBrand},#{picPath})
+    </insert>
+
+    <select id="findAllRepertory" resultMap="myGoodsMapper">
+        SELECT goods_id,goods_name,goods_stock,goods_threshold FROM goods_info
+    </select>
+    <select id="findStockout" resultMap="myGoodsMapper">
+        SELECT goods_id,goods_name,goods_stock,goods_threshold FROM goods_info WHERE goods_stock&lt;=goods_threshold
+    </select>
+    <select id="findRepertoryById" resultMap="myGoodsMapper">
+        SELECT goods_id,goods_name,goods_stock,goods_threshold FROM goods_info WHERE goods_id=#{goodsId}
+    </select>
+    <update id="replenishment" parameterType="int">
+        update goods_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="goodsStock!=null">
+                goods_stock=#{goodsStock},
+            </if>
+            <if test="goodsThreshold!=null">
+                goods_threshold=#{goodsThreshold},
+            </if>
+        </trim>
+        where goods_id=#{goodsId}
+    </update>
+
+    <select id="findAllSort" resultMap="myGoodsMapper">
+        SELECT goods_id,goods_name,goods_sort FROM goods_info
+    </select>
+    <update id="updateSort" parameterType="int">
+        update goods_info set goods_sort=#{goodsSort} where goods_id=#{goodsId}
+    </update>
+</mapper>

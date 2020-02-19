@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzy.fruitmall.mapper.CustomerMapper">
+
+    <select id="findAllCustomer" resultType="customerInfo">
+        select * from customer_info
+    </select>
+
+    <select id="login" resultType="customerInfo">
+        select * from customer_info where (customer_account=#{param1} or customer_tel=#{param1})and customer_pass=md5(#{param2})
+    </select>
+
+    <resultMap id="customerMapper" type="customerInfo">
+        <id column="customer_id" property="customerId"/>
+        <!--第一步查询的东西这里只写一个主键就行-->
+        <!--注意注意注意！！！这里的select的要写方法的全路径(如果这个方法不在你该xml文件对应的mapper中),
+            column要写数据库中的列名-->
+        <!--查找头像信息-->
+        <association property="headPortraitInfo" column="head_portrait_id" select="com.xzy.fruitmall.mapper.HeadPortraitMapper.getHeadPortraitById"/>
+
+        <!--&lt;!&ndash;查找收藏集合&ndash;&gt;-->
+        <!--<collection property="collectionSet" column="customer_id" select="com.xzy.fruitmall.mapper.CollectionMapper.getCollectionSetByCustomerId"/>-->
+
+        <!--&lt;!&ndash;查找地址集合&ndash;&gt;-->
+        <!--<collection property="addressSet" column="customer_id" select="com.xzy.fruitmall.mapper.AddressMapper.getAddressSetByCustomerId"/>-->
+
+        <!--&lt;!&ndash;查找历史记录集合&ndash;&gt;-->
+        <!--<collection property="historySet" column="customer_id" select="com.xzy.fruitmall.mapper.HistoryMapper.getHistoryByCustomerId"/>-->
+
+        <!--&lt;!&ndash;查找评论集合&ndash;&gt;-->
+        <!--<collection property="evaluateSet" column="customer_id" select="com.xzy.fruitmall.mapper.EvaluateMapper.getEvaluateSetByCustomerId"/>-->
+
+        <!--&lt;!&ndash;查找订单集合&ndash;&gt;-->
+        <!--<collection property="orderSet" column="customer_id" select="com.xzy.fruitmall.mapper.OrderMapper.getOrderSetByCustomerId"/>-->
+        <!--查找收藏集合-->
+        <association property="collectionSet" column="customer_id" select="com.xzy.fruitmall.mapper.CollectionMapper.getCollectionSetByCustomerId"/>
+
+        <!--查找地址集合-->
+        <collection property="addressSet" column="customer_id" select="com.xzy.fruitmall.mapper.AddressMapper.getAddressSetByCustomerId"/>
+
+        <!--查找历史记录集合-->
+        <collection property="historySet" column="customer_id" select="com.xzy.fruitmall.mapper.HistoryMapper.getHistoryByCustomerId"/>
+
+        <!--查找评论集合-->
+        <collection property="evaluateSet" column="customer_id" select="com.xzy.fruitmall.mapper.EvaluateMapper.getEvaluateSetByCustomerId"/>
+
+        <!--查找订单集合-->
+        <collection property="orderSet" column="customer_id" select="com.xzy.fruitmall.mapper.OrderMapper.getOrderSetByCustomerId"/>
+    </resultMap>
+
+
+    <select id="loadCustomerInform" resultMap="customerMapper">
+        select * from customer_info where customer_id=#{customerId}
+    </select>
+
+    <select id="getHeadPortraitById" resultType="headPortraitInfo">
+          select * from head_portrait_info where head_portrait_id=#{headPortraitId}
+    </select>
+
+
+
+    <select id="getCustomerMsgById" parameterType="int" resultMap="customerMapper">
+        select nick_Name,h.head_Portrait_Id,head_Portrait from customer_info  c, head_Portrait_info h
+        where customer_Id=#{customerId}  and c.head_Portrait_Id=h.head_Portrait_Id
+    </select>
+
+
+    <update id="updateCustomerName" parameterType="customerInfo">
+    update customer_info set nick_name=#{nickName}  where    customer_Id=#{customerId}
+    </update>
+    <update id="updateHeadPortrait" parameterType="customerInfo">
+            update customer_info set head_portrait_Id =#{headPortraitId}  where  customer_Id=#{customerId}
+    </update>
+    <select id="logOnCustomer" resultType="customerInfo">
+        SELECT * FROM customer_info WHERE (customer_tel=#{name} OR customer_account=#{name}) AND customer_pass=MD5(#{pass})
+
+    </select>
+    <select id="logOnByTelYzm" resultType="customerInfo">
+        SELECT * FROM customer_info WHERE customer_tel=#{tel}
+    </select>
+    <select id="existTel" resultType="customerInfo">
+        SELECT * FROM customer_info WHERE customer_tel=#{tel}
+    </select>
+    <select id="existAccount" resultType="customerInfo">
+        SELECT * FROM customer_info WHERE customer_account=#{account}
+    </select>
+</mapper>

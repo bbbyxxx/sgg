@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzy.fruitmall.mapper.RotationMapper">
+    <select id="getAllRotation" resultType="RotationInfo">
+        select * from rotation_info
+    </select>
+    <delete id="deleteRotation" parameterType="RotationInfo">
+        DELETE FROM rotation_info WHERE rotation_id=#{rotationId}
+    </delete>
+    <insert id="addRotation" parameterType="RotationInfo">
+        INSERT INTO rotation_info VALUE (default ,#{imgPath},#{goodsId})
+    </insert>
+</mapper>

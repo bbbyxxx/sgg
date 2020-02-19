@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings><!--控制台可以输出sql语句-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!--&lt;!&ndash;开启延迟加载和属性按需加载;-->
+        <setting name="LazyLoadingEnable" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+</configuration>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzy.fruitmall.mapper.AddressMapper">
+
+    <select id="getAddressSetByCustomerId" resultType="addressInfo">
+        select * from address_info where customer_id=#{customerId}
+    </select>
+
+    <resultMap id="addressMap" type="addressInfo">
+        <id column="address_id" property="addressId"/>
+    </resultMap>
+
+    <select id="getAddressByAddressId" resultMap="addressMap">
+        select * from address_info where address_id=#{addressId}
+    </select>
+
+    <select id="findAllAddress"  parameterType="int" resultType="AddressInfo">
+        SELECT *FROM address_info  WHERE customer_id = #{customerId}
+    </select>
+    <select id="getDefaultAddress"  parameterType="int" resultType="AddressInfo">
+        SELECT *FROM address_info  WHERE customer_id = #{customerId} and is_default=1
+    </select>
+    <insert id="addAddress">
+     insert into address_info
+      values(null,#{customerId},#{consignee},#{consigneeAddress},#{consigneeTel},#{isDefault})
+    </insert>
+    <delete id="deleteAddressById" parameterType="int">
+        DELETE FROM address_info WHERE address_id=#{addressId};
+    </delete>
+    <update id="updateAddress" parameterType="AddressInfo">
+        update address_info  set consignee=#{consignee},consignee_address=#{consigneeAddress},
+        consignee_tel=#{consigneeTel},is_default=#{isDefault}
+         where address_id=#{addressId} and customer_id=#{customerId}
+    </update>
+    <update id="setAddressDefault" parameterType="int">
+        update address_info  set is_default=0
+         where customer_id=#{customerId}  and  is_default=1
+    </update>
+</mapper>

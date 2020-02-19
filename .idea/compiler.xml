@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="fruitmall-biz" />
+        <module name="fruitmall-dao" />
+        <module name="fruitmall-entity" />
+        <module name="fruitmall-web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="fruitmall" target="1.8" />
+      <module name="fruitmall-biz" target="1.8" />
+      <module name="fruitmall-dao" target="1.8" />
+      <module name="fruitmall-entity" target="1.8" />
+      <module name="fruitmall-web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="fruitmall-biz" options="-parameters" />
+      <module name="fruitmall-dao" options="-parameters" />
+      <module name="fruitmall-entity" options="-parameters" />
+      <module name="fruitmall-web" options="-parameters" />
+    </option>
+  </component>
+</project>

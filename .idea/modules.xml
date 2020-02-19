@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/fruitmall.iml" filepath="$PROJECT_DIR$/fruitmall.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fruitmall-biz/fruitmall-biz.iml" filepath="$PROJECT_DIR$/fruitmall-biz/fruitmall-biz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fruitmall-dao/fruitmall-dao.iml" filepath="$PROJECT_DIR$/fruitmall-dao/fruitmall-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fruitmall-entity/fruitmall-entity.iml" filepath="$PROJECT_DIR$/fruitmall-entity/fruitmall-entity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fruitmall-web/fruitmall-web.iml" filepath="$PROJECT_DIR$/fruitmall-web/fruitmall-web.iml" />
+    </modules>
+  </component>
+</project>

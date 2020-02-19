@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzy.fruitmall.mapper.ResponseMapper">
+    <select id="getResponseSetByEvaluateId" resultType="responseInfo">
+        select * from response_info where evaluate_id=#{evaluateId}
+    </select>
+    <select id="findAllResponse" resultType="ResponseInfo">
+        select * from response_info
+    </select>
+    <insert id="addResponse" parameterType="ResponseInfo">
+        insert into response_info value (#{evaluateId},#{responser},#{responseContent},default)
+    </insert>
+    <select id="getResponseByAualuateId" resultType="ResponseInfo">
+        select * from response_info where evaluate_id=#{evaluateId}
+    </select>
+</mapper>

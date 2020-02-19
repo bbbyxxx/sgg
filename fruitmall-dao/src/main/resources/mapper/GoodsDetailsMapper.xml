@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzy.fruitmall.mapper.GoodsDetailsMapper">
+    <resultMap id="findAboutTheGood" type="goodsInfo">
+        <id column="goods_id" property="goodsId"></id>
+        <result column="goods_name" property="goodsName"></result>
+        <result column="goods_price" property="goodsPrice"></result>
+        <result column="goods_sort" property="goodsSort"></result>
+        <result column="goods_description" property="goodsDescription"></result>
+        <result column="goods_stock" property="goodsStock"></result>
+        <result column="goods_threshold" property="goodsThreshold"></result>
+        <result column="goods_origin" property="goodsOrigin"></result>
+        <result column="storage_conditions" property="storageConditions"></result>
+        <result column="goods_brand" property="goodsBrand"></result>
+        <result column="goods_sale" property="goodsSale"></result>
+        <result column="goods_click" property="goodsClick"></result>
+        <result column="pic_path" property="picPath"></result>
+        <result column="goods_time" property="goodsTime"></result>
+        <collection property="imgSet"
+                    column="goods_id"
+                    select="com.xzy.fruitmall.mapper.ImgSetMapper.findImgByGoodsId">
+        </collection>
+        <collection property="evaluateSet"
+                    column="goods_id"
+                    select="com.xzy.fruitmall.mapper.EvaluateSetMapper.findEvaluateByGoodsId">
+        </collection>
+    </resultMap>
+    <select id="findAllAboutTheGood" resultMap="findAboutTheGood" parameterType="int">
+        select * from goods_info where goods_id = #{goodsId}
+    </select>
+</mapper>

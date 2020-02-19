@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzy.fruitmall.mapper.ShoppingMapper">
+    <resultMap id="map1" type="shoppingInfo">
+        <id property="goodsId" column="goods_id" />
+        <id property="customerId" column="customer_id" />
+        <result property="goodsNum" column="goods_num" />
+        <association property="goodsInfo" column="goods_id" javaType="goodsInfo">
+            <id property="goodsId" column="goods_id" />
+            <result property="goodsName" column="goods_name"/>
+            <result property="goodsPrice" column="goods_price"/>
+            <result property="goodsSort" column="goods_sort" />
+            <result property="goodsDescription" column="goods_description"/>
+            <result property="goodsStock" column="goods_stock" />
+            <result property="goodsThreshold" column="goods_threshold" />
+            <result property="goodsOrigin" column="goods_origin" />
+            <result property="storageConditions" column="storage_conditions" />
+            <result property="goodsBrand" column="goods_brand" />
+            <result property="goodsSale" column="goods_sale" />
+            <result property="goodsClick" column="goods_click" />
+            <result property="picPath" column="pic_path" />
+        </association>
+    </resultMap>
+    <select id="shoppingCartDisplay" resultMap="map1">
+        SELECT * FROM shopping_info s JOIN goods_info g WHERE s.goods_id=g.goods_id AND customer_id=#{customerId}
+    </select>
+    <insert id="addOrder" parameterType="orderInfo">
+        <selectKey order="AFTER" resultType="java.lang.Integer" keyProperty="orderId">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO order_info(customer_id,order_amount,address_id)
+        VALUES(#{customerId},#{orderAmount},#{addressId})
+    </insert>
+    <insert id="addOrderForGoods">
+        INSERT INTO goods_order_info VALUES(#{orderId},#{goodsId},#{goodsNum},default)
+    </insert>
+</mapper>
